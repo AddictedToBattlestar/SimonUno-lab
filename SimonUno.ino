@@ -1,29 +1,43 @@
 #include "Button.h"
+#include "Keyboard.h"
 #include "PeizoBuzzer.h"
 
-constexpr Button redButton(18);
-PeizoBuzzer buzzer(19);
+constexpr Button redButton(18, 0);
+constexpr Button greenButton(8, 1);
+constexpr Button blueButton(6, 2);
+constexpr Button yellowButton(4, 3);
+const int buttonCount = 4;
+constexpr Button buttonList[buttonCount] = {
+  redButton, greenButton, blueButton, yellowButton
+};
 
-bool lastPressed = false;
+Keyboard keyboard(buttonList, buttonCount);
+const Button* buttonLastPressed = NULL;
+
+PeizoBuzzer buzzer(19);
 
 void setup() {
   // Initialize the serial port so we can see things happening
   Serial.begin(115200);
 
   buzzer.begin();
-  redButton.begin();
+  keyboard.begin();
 }
 
 void loop() {
-  bool pressed = redButton.readState();
-  if(pressed != lastPressed) {
-    lastPressed = pressed;
-    if (pressed) {
-      Serial.println("Button Pressed");
-      buzzer.turnOn();
-    } else {
-      Serial.println("Button Released");
+  keyboard.scan();
+  const Button* buttonPressed = keyboard.getButtonPressed();
+  if (buttonPressed != buttonLastPressed) {
+    if (buttonLastPressed != NULL) {
+      Serial.println("Released");
       buzzer.turnOff();
+    }
+    buttonLastPressed = buttonPressed;
+    if (buttonPressed) {
+      Serial.print("Button ");
+      Serial.print(buttonPressed->getId(), DEC);
+      Serial.print(" Pressed - ");
+      buzzer.turnOn();
     }
   }
 }

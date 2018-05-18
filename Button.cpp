@@ -7,3 +7,8 @@ void Button::begin() const {
 bool Button::readState() const {
   return digitalRead(pin_) == LOW;  
 }
+
+int Button::getId() const {
+  return id_;
+}
+
