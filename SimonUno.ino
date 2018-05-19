@@ -2,6 +2,8 @@
 #include "Keyboard.h"
 #include "PeizoBuzzer.h"
 
+PeizoBuzzer buzzer(19);
+
 constexpr Button redButton(18, 0);
 constexpr Button greenButton(8, 1);
 constexpr Button blueButton(6, 2);
@@ -13,8 +15,6 @@ constexpr Button buttonList[buttonCount] = {
 
 Keyboard keyboard(buttonList, buttonCount);
 const Button* buttonLastPressed = NULL;
-
-PeizoBuzzer buzzer(19);
 
 void setup() {
   // Initialize the serial port so we can see things happening
