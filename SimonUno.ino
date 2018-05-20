@@ -3,6 +3,7 @@
 #include "PeizoBuzzer.h"
 #include "Led.h"
 #include "RgbControl.h"
+#include "LedDisplay.h"
 
 PeizoBuzzer buzzer(19);
 
@@ -27,6 +28,7 @@ constexpr Led yellowButtonLed(5);
 const int ledCount = 4;
 constexpr Led ledList[ledCount] = { redButtonLed, greenButtonLed, blueButtonLed, yellowButtonLed };
 RgbControl rgbControl(11,10,9);
+LedDisplay ledDisplay(ledList, ledCount, rgbControl, 4);
 
 
 void setup() {
@@ -36,31 +38,27 @@ void setup() {
   buzzer.begin();
   rgbControl.begin();
   keyboard.begin();
-
-  redButtonLed.begin();
-  greenButtonLed.begin();
-  blueButtonLed.begin();
-  yellowButtonLed.begin();
+  ledDisplay.begin();
 }
 
 void loop() {
+  ledDisplay.update();
   keyboard.scan();
   const Button* buttonPressed = keyboard.getButtonPressed();
   if (buttonPressed != buttonLastPressed) {
     if (buttonLastPressed != NULL) {
-      Serial.println("Released");
+      Serial.println("Button released");
       buzzer.turnOff();
-      ledList[buttonLastPressed->getId()].turnOff();
     }
-    buttonLastPressed = buttonPressed;
     if (buttonPressed) {
-      rgbControl.setColor(buttonPressed->getColor());
-      ledList[buttonPressed->getId()].turnOn();
       Serial.print("Button ");
       Serial.print(buttonPressed->getId(), DEC);
-      Serial.print(" Pressed - ");
+      Serial.println(" Pressed");
+      rgbControl.setColor(buttonPressed->getColor());
+      ledDisplay.turnLedOn(buttonPressed->getId(), buttonPressed->getColor());
       buzzer.turnOn();
     }
+    buttonLastPressed = buttonPressed;
   }
 }
 
