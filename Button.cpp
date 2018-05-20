@@ -12,3 +12,7 @@ int Button::getId() const {
   return id_;
 }
 
+const Color& Button::getColor() const {
+  return color_;
+}
+
