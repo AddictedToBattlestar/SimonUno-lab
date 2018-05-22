@@ -22,13 +22,13 @@ class RgbControl {
     }
 
     void setColor(const Color &color) const {
-      Serial.print(" - set color (red:");
-      Serial.print(color.red(), DEC);
-      Serial.print(", green:");
-      Serial.print(color.green(), DEC);
-      Serial.print(", blue:");
-      Serial.print(color.blue(), DEC);
-      Serial.println(")");
+//      Serial.print(" - set color (red:");
+//      Serial.print(color.red(), DEC);
+//      Serial.print(", green:");
+//      Serial.print(color.green(), DEC);
+//      Serial.print(", blue:");
+//      Serial.print(color.blue(), DEC);
+//      Serial.println(")");
       analogWrite(redPin_, color.red());
       analogWrite(greenPin_, color.green());
       analogWrite(bluePin_, color.blue());

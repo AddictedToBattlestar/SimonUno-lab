@@ -13,6 +13,7 @@ class EventTimer {
 
     bool hasEventFired();
     void reset();
+    void setInterval(unsigned long interval);
 };
 
 #endif /* EVENTTIMER_H */

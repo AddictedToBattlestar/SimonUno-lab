@@ -4,6 +4,8 @@
 #include "Led.h"
 #include "RgbControl.h"
 #include "LedDisplay.h"
+#include "Animator.h"
+#include "FlashAnimation.h"
 
 PeizoBuzzer buzzer(19);
 
@@ -30,6 +32,8 @@ constexpr Led ledList[ledCount] = { redButtonLed, greenButtonLed, blueButtonLed,
 RgbControl rgbControl(11,10,9);
 LedDisplay ledDisplay(ledList, ledCount, rgbControl, 4);
 
+Animator animator(ledDisplay);
+FlashAnimation redBlink(COLORS::RED, 4, 250, 100);
 
 void setup() {
   // Initialize the serial port so we can see things happening
@@ -42,23 +46,18 @@ void setup() {
 }
 
 void loop() {
+  animator.update();
   ledDisplay.update();
   keyboard.scan();
-  const Button* buttonPressed = keyboard.getButtonPressed();
-  if (buttonPressed != buttonLastPressed) {
-    if (buttonLastPressed != NULL) {
-      Serial.println("Button released");
-      buzzer.turnOff();
-    }
-    if (buttonPressed) {
-      Serial.print("Button ");
-      Serial.print(buttonPressed->getId(), DEC);
-      Serial.println(" Pressed");
-      rgbControl.setColor(buttonPressed->getColor());
-      ledDisplay.turnLedOn(buttonPressed->getId(), buttonPressed->getColor());
-      buzzer.turnOn();
-    }
-    buttonLastPressed = buttonPressed;
+  if (!animator.isActive()) {
+      const Button* buttonPressed = keyboard.getButtonPressed();
+      if (buttonPressed != buttonLastPressed) {
+        if (buttonPressed) {
+          animator.playAnimation(redBlink);
+          // buzzer.turnOn();
+        }
+        buttonLastPressed = buttonPressed;
+      }
   }
 }
 

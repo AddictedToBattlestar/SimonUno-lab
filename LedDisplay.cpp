@@ -9,6 +9,12 @@ void LedDisplay::begin() {
   }
 }
 
+void LedDisplay::blank() {
+    for (int ledIndex = 0; ledIndex<ledCount_; ledIndex++) {
+    colorRam_[ledIndex] = COLORS::OFF;
+  }
+}
+
 void LedDisplay::update() {
   // update is ran at the beginning of each loop and 
   if(eventTimer_.hasEventFired()) {
@@ -43,4 +49,7 @@ void LedDisplay::turnLedOff(const int ledIndex) {
   colorRam_[ledIndex] = COLORS::OFF;
 }
 
+unsigned int LedDisplay::getLedCount() const {
+  return ledCount_;
+}
 

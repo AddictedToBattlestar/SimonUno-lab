@@ -16,4 +16,8 @@ void EventTimer::reset() {
   nextFire_ = millis() + interval_;
 }
 
+void EventTimer::setInterval(unsigned long interval) {
+  interval_ = interval;
+  reset();
+}
 

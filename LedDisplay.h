@@ -22,9 +22,11 @@ class LedDisplay {
     LedDisplay(const Led* const leds, const int ledCount, const RgbControl& rgbControl, const int refreshInterval);
 
     void begin();
+    void blank();
     void update();
     void turnLedOn(const int ledIndex, const Color& color);
     void turnLedOff(const int ledIndex);
+    unsigned int getLedCount() const;
 };
 
 #endif /* LEDDISPLAY_H */

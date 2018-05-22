@@ -33,8 +33,6 @@ void Keyboard::scan() {
       }
     }
   }
-  
-
 }
 
 const Button* const Keyboard::getButtonPressed() const {
