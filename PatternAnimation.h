@@ -3,16 +3,20 @@
 
 #include <Arduino.h>
 #include "Animation.h"
+#include "Button.h"
 #include "SimonPattern.h"
 
 class PatternAnimation : public Animation {
   private:
     const SimonPattern& pattern_;
+    const int buttonCount_;
+    const Button* const buttons_;
+    
     unsigned int patternIdx_;
     bool on_;
 
   public:
-    PatternAnimation(const SimonPattern& pattern);
+    PatternAnimation(const SimonPattern& pattern, const Button* const buttons, const int buttonCount);
 
     void reset();
     const bool nextFrame();

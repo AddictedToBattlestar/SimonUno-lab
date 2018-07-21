@@ -5,9 +5,10 @@
 #include "Color.h"
 
 class SimonPattern {
-  private:
+  public:
     static const unsigned int MAX_PATTERN_LENGTH = 20;
 
+  private:
     const unsigned int colorCount_;
     const Color* const colorList_;
 
