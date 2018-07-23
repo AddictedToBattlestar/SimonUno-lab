@@ -12,6 +12,12 @@ void Keyboard::begin() const {
   }
 }
 
+/*
+ * Something that it took me to realize here was that for the debouncing effort in the scan method the 
+ * stateBuffer_ is cyclic and the *only* thing that is important is that all values for the given
+ * button in the buffer need to read true.  It doesn't matter is there are only 3 stored values in the 
+ * buffer or 10 for the button,  as long as they register as all being true then the button is pressed.
+ */
 void Keyboard::scan() {
   if (eventTimer_.hasEventFired()) {
 
