@@ -31,6 +31,7 @@ const Color& PatternAnimation::getFrameLedColor(unsigned int led) {
       }
     }
   }
+  return COLORS::OFF;
 }
 
 const unsigned int PatternAnimation::getFrameInterval() {
